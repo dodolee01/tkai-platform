@@ -1,0 +1,18 @@
+# ---- PocketBase (veritabanı + auth + dosya depolama) ----
+FROM node:22-slim
+
+# ca-certificates: PocketBase'in TLS istekleri için
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app/apps/pocketbase
+
+# PocketBase binary + migrations + hooks
+COPY apps/pocketbase/ ./
+
+RUN chmod +x ./pocketbase
+
+EXPOSE 8090
+
+# Migrations otomatik uygulanır (pb_migrations klasörü).
+# pb_data volume ile kalıcı hale getirilir (docker-compose).
+CMD ["./pocketbase", "serve", "--http=0.0.0.0:8090", "--encryptionEnv=PB_ENCRYPTION_KEY", "--dir=/app/apps/pocketbase/pb_data", "--migrationsDir=./pb_migrations", "--hooksDir=./pb_hooks", "--hooksWatch=false"]

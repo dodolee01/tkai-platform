@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: clip;
+  background: var(--app-bg, #0b1020);
+  letter-spacing: -0.01em;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+:root { --app-bg: #0a0a0a; }
+:root.light { --app-bg: #eef1f8; }
+
+/* ---- AŞAMA 1: Design system scale (deep blacks + graphite) ---- */
+:root {
+  --ink-900: #0a0a0a;
+  --ink-800: #0f0f0f;
+  --ink-700: #1a1a1a;
+  --graphite-600: #2d2d2d;
+  --graphite-500: #3a3a3a;
+  --graphite-400: #4a4a4a;
+  --brand-purple: #7c3aed;
+  --brand-blue: #3b82f6;
+  /* spacing scale */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-6: 24px; --sp-8: 32px; --sp-12: 48px; --sp-16: 64px;
+  /* depth */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.45);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+    --success: 160 84% 39%;
+    --warning: 38 92% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 262 83% 58%;
+    --radius: 0.85rem;
+  }
+
+  /* ---- Light mode palette ---- */
+  :root.light {
+    --background: 220 40% 97%;
+    --foreground: 222 47% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 14%;
+    --primary: 258 80% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 24% 92%;
+    --secondary-foreground: 222 47% 18%;
+    --muted: 220 24% 93%;
+    --muted-foreground: 222 12% 40%;
+    --accent: 217 91% 52%;
+    --accent-foreground: 0 0% 100%;
+    --success: 160 70% 34%;
+    --warning: 34 92% 45%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 20% 84%;
+    --input: 220 20% 84%;
+    --ring: 258 80% 58%;
+  }
+}
+
+/* ---- Light-mode surface overrides for hardcoded dark chrome ---- */
+:root.light .glass {
+  background: linear-gradient(155deg, rgba(255,255,255,0.92), rgba(244,246,252,0.86));
+  border: 1px solid rgba(120,110,180,0.16);
+  box-shadow: 0 18px 50px -30px rgba(60,60,120,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+:root.light .card-gradient {
+  background:
+    linear-gradient(160deg, rgba(255,255,255,0.96), rgba(246,248,253,0.92)) padding-box,
+    linear-gradient(135deg, rgba(124,92,246,0.4), rgba(59,130,246,0.32) 55%, rgba(124,92,246,0.12)) border-box;
+  box-shadow: 0 20px 54px -34px rgba(60,60,120,0.32);
+}
+:root.light .input-modern { background: rgba(255,255,255,0.9); }
+:root.light .grid-bg {
+  background-image:
+    radial-gradient(circle at 15% 8%, rgba(124,92,246,0.12), transparent 44%),
+    radial-gradient(circle at 88% 2%, rgba(59,130,246,0.10), transparent 42%),
+    linear-gradient(rgba(20,20,60,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,20,60,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 42px 42px, 42px 42px;
+}
+/* Neutralize the app's hardcoded near-black header/sidebar/panel backgrounds. */
+:root.light [class*="bg-[#06070d]"],
+:root.light [class*="bg-[#0a0e1c]"],
+:root.light [class*="bg-[#0b1020]"],
+:root.light [class*="bg-[#0"] {
+  background-color: rgba(255,255,255,0.88) !important;
+}
+:root.light .bg-black\/30,
+:root.light .bg-black\/40,
+:root.light .bg-black\/20 { background-color: rgba(15,20,40,0.05) !important; }
+:root.light .bg-white\/\[0\.04\],
+:root.light .bg-white\/5 { background-color: rgba(20,20,60,0.04) !important; }
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    color: hsl(var(--foreground));
+  }
+}
+
+.font-display { font-family: "Sora", sans-serif; }
+.font-mono { font-family: "JetBrains Mono", monospace; }
+
+/* Purple/blue gradient accent helpers */
+.gradient-accent {
+  background-image: linear-gradient(120deg, hsl(262 83% 63%), hsl(220 90% 62%));
+}
+.gradient-text {
+  background-image: linear-gradient(120deg, hsl(262 90% 72%), hsl(210 95% 68%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-btn {
+  background-image: linear-gradient(120deg, hsl(262 83% 60%), hsl(222 88% 58%));
+  color: #fff;
+  box-shadow: 0 12px 34px -14px rgba(124,92,246,0.7);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.gradient-btn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 18px 44px -16px rgba(124,92,246,0.85);
+  transform: translateY(-1px);
+}
+.gradient-btn:active { transform: translateY(0) scale(0.985); }
+
+.glass {
+  background: linear-gradient(155deg, rgba(26,26,26,0.82), rgba(15,15,15,0.7));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 10px 30px -18px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.glass-hover {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.glass-hover:hover {
+  border-color: rgba(167, 139, 250, 0.42);
+  box-shadow: 0 26px 66px -26px rgba(124,92,246,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+  transform: translateY(-3px);
+}
+
+/* Gradient-border card: purple->blue ring around a dark surface */
+.card-gradient {
+  position: relative;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(160deg, rgba(26,26,26,0.92), rgba(12,12,12,0.88)) padding-box,
+    linear-gradient(135deg, rgba(124,58,237,0.42), rgba(59,130,246,0.3) 55%, rgba(124,58,237,0.1)) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 20px 54px -34px rgba(0,0,0,0.95);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.card-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 30px 70px -28px rgba(124,92,246,0.55);
+}
+
+/* Icon badge chip */
+.icon-badge {
+  display: grid;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, hsl(255 92% 76% / 0.22), hsl(217 91% 60% / 0.18));
+  color: hsl(255 92% 82%);
+  border: 1px solid hsl(255 92% 76% / 0.28);
+}
+
+/* Gradient nav highlight for the active sidebar item */
+.nav-active {
+  background: linear-gradient(120deg, hsl(255 92% 66% / 0.9), hsl(217 91% 58% / 0.9));
+  color: #fff;
+  box-shadow: 0 12px 30px -14px rgba(124,92,246,0.75), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* Modern input focus: gradient glow ring */
+.input-modern {
+  background: rgba(10,10,10,0.6);
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.7rem;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.input-modern:focus, .input-modern:focus-visible {
+  outline: none;
+  border-color: hsl(255 92% 76% / 0.7);
+  box-shadow: 0 0 0 3px hsl(255 92% 76% / 0.16), 0 0 24px -6px hsl(255 92% 70% / 0.5);
+}
+
+/* Table header gradient */
+.thead-gradient th {
+  background: linear-gradient(120deg, hsl(255 60% 30% / 0.55), hsl(217 70% 32% / 0.5));
+  color: hsl(220 32% 96%);
+  font-weight: 600;
+}
+.row-hover tr:hover > td { background: rgba(167,139,250,0.06); }
+
+.grid-bg {
+  background-image:
+    radial-gradient(circle at 15% 8%, rgba(124,92,246,0.16), transparent 44%),
+    radial-gradient(circle at 88% 2%, rgba(59,130,246,0.13), transparent 42%),
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 42px 42px, 42px 42px;
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,120,220,0.2); border-radius: 9px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(139,120,220,0.36); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.82); }
+}
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track { animation: ticker 38s linear infinite; }
+.ticker-track:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track, .pulse-dot { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Accessibility polish (WCAG 2.1 AA) ---- */
+
+/* Visible, consistent keyboard focus ring for all interactive elements.
+   Uses :focus-visible so mouse clicks don't show the ring, only keyboard nav. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid hsl(255 92% 76%);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Screen-reader-only utility for visually hidden labels. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-to-content link — appears on keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  background: hsl(255 92% 66%);
+  color: #fff;
+  font-weight: 600;
+  transition: top .18s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---- Status design tokens (semantic color scale) ---- */
+:root {
+  --status-success: 160 84% 39%;
+  --status-warning: 38 92% 50%;
+  --status-danger: 0 84% 60%;
+  --status-info: 217 91% 60%;
+}

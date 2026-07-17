@@ -1,0 +1,64 @@
+# =============================================================
+# TK AI FİNANCE — Docker Compose
+# Kullanım:
+#   cp .env.example .env   (değerleri doldurun)
+#   docker compose up -d --build
+# Servisler:
+#   - pocketbase : veritabanı/auth/dosya  (8090)
+#   - api        : Express API            (5000)
+#   - web        : React + Nginx          (3000)
+# =============================================================
+services:
+  pocketbase:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.pocketbase
+    container_name: tkai-pocketbase
+    restart: unless-stopped
+    environment:
+      PB_ENCRYPTION_KEY: ${PB_ENCRYPTION_KEY}
+    volumes:
+      - pb_data:/app/apps/pocketbase/pb_data
+    ports:
+      - "${POCKETBASE_PORT:-8090}:8090"
+    networks:
+      - tkai
+
+  api:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.api
+    container_name: tkai-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      TRADING_ENC_KEY: ${TRADING_ENC_KEY}
+      POCKETBASE_URL: http://pocketbase:8090
+    depends_on:
+      - pocketbase
+    ports:
+      - "${API_PORT:-5000}:5000"
+    networks:
+      - tkai
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.web
+    container_name: tkai-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    networks:
+      - tkai
+
+volumes:
+  pb_data:
+
+networks:
+  tkai:
+    driver: bridge

@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+.git
+.gitignore
+*.log
+**/.env
+apps/pocketbase/pb_data/*.db-wal
+apps/pocketbase/pb_data/*.db-shm
+apps/pocketbase/pb_data/backups
+.DS_Store

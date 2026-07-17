@@ -1,0 +1,20 @@
+node_modules/
+dist/
+logs/
+*.log
+
+# Ortam değişkenleri — asla commit etmeyin
+.env
+apps/api/.env
+apps/web/.env
+
+# PocketBase çalışma verileri
+apps/pocketbase/pb_data/*.db-wal
+apps/pocketbase/pb_data/*.db-shm
+apps/pocketbase/pb_data/backups/
+
+# Arşivler / yedekler
+*.tar.gz
+*.zip
+
+.DS_Store

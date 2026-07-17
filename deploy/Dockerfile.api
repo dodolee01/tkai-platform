@@ -1,0 +1,20 @@
+# ---- Express API sunucusu ----
+FROM node:22-slim
+
+WORKDIR /app
+
+# Bağımlılıkları kur (yalnızca api workspace)
+COPY apps/api/package.json ./apps/api/package.json
+WORKDIR /app/apps/api
+RUN npm install --omit=dev
+
+# Kaynak kodu kopyala
+COPY apps/api/ ./
+
+ENV NODE_ENV=production
+ENV PORT=5000
+EXPOSE 5000
+
+# .env dosyası docker-compose'daki env_file / environment üzerinden gelir.
+# --env-file flag'ini kaldırıp doğrudan process.env kullanıyoruz.
+CMD ["node", "src/main.js"]

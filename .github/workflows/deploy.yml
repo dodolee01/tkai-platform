@@ -1,0 +1,94 @@
+# =============================================================
+# TK AI FİNANCE — CI/CD Pipeline (GitHub Actions)
+# Runs on every push / PR: install, lint, build.
+# Deploys to the production VPS over SSH when pushing to `main`.
+# Configure repository secrets:
+#   VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_APP_DIR
+# =============================================================
+name: CI/CD
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: dist/apps/web
+          retention-days: 7
+
+  deploy-staging:
+    name: Deploy → Staging
+    needs: verify
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ secrets.VPS_APP_DIR }}
+            git pull origin staging
+            npm install
+            npm run build
+            pm2 restart all
+
+  deploy-production:
+    name: Deploy → Production
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ secrets.VPS_APP_DIR }}
+            # snapshot current release for rollback
+            git rev-parse HEAD > .last_release
+            git pull origin main
+            npm install
+            npm run build || (git reset --hard $(cat .last_release) && npm run build && exit 1)
+            pm2 restart all
+
+      - name: Notify deployment
+        if: always()
+        run: echo "Production deploy finished with status ${{ job.status }}"
