@@ -1,0 +1,18 @@
+{
+  "name": "bot",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TK AI FINANCE — 24/7 otomatik işlem botu (ayrı Node.js servisi)",
+  "scripts": {
+    "start": "node --env-file=.env src/index.js",
+    "start:bot": "node --env-file=.env src/index.js",
+    "dev": "node --watch --env-file=.env src/index.js",
+    "dev:bot": "node --watch --env-file=.env src/index.js",
+    "backtest": "node --env-file=.env src/backtest.js"
+  },
+  "dependencies": {
+    "pocketbase": "^0.27.0",
+    "ws": "^8.21.1"
+  }
+}
