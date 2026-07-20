@@ -1,0 +1,19 @@
+{
+  "name": "tkai-decision-engine",
+  "version": "1.0.0",
+  "description": "TK AI Finance - Module 3: AI Decision Engine (ESM, weighted scoring, market-state aware)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./src/*": "./src/*.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/**/*.test.js"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
