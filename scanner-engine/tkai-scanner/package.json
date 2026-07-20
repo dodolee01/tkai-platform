@@ -1,0 +1,18 @@
+{
+  "name": "tkai-binance-scanner",
+  "version": "1.0.0",
+  "description": "TK AI FINANCE — Module 2: Binance Institutional Futures Scanner (market data layer only)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/scanner/**/*.test.js test/scanner/*.test.js",
+    "start": "node src/scanner/bin/start.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
