@@ -1,0 +1,19 @@
+{
+  "name": "execution-engine",
+  "version": "1.0.0",
+  "description": "TK AI FINANCE — Module 6: Execution Engine (executes ONLY approved Risk Engine plans; adapter-based multi-exchange architecture, Binance Futures implemented)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {},
+  "license": "UNLICENSED",
+  "private": true
+}
