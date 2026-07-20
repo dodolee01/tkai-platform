@@ -1,0 +1,19 @@
+{
+  "name": "tkai-finance-indicators",
+  "version": "1.1.0",
+  "description": "TK AI Finance - Module 1: Technical & market-microstructure indicators (ESM, streaming/incremental)",
+  "type": "module",
+  "main": "src/indicators/index.js",
+  "exports": {
+    ".": "./src/indicators/index.js",
+    "./indicators/*": "./src/indicators/*.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/**/*.test.js"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
