@@ -1,0 +1,19 @@
+{
+  "name": "learning-engine",
+  "version": "1.0.0",
+  "description": "TK AI FINANCE — Module 5: Deterministic Learning Engine (trade history, performance analytics, weight/confidence optimization, overfitting detection)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {},
+  "license": "UNLICENSED",
+  "private": true
+}
