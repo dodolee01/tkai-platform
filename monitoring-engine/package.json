@@ -1,0 +1,19 @@
+{
+  "name": "monitoring-engine",
+  "version": "1.0.0",
+  "description": "TK AI FINANCE — Module 12: Monitoring & Health Engine (24/7 health, heartbeat, system/database/exchange/websocket/AI monitoring, watchdog, incident management, auto-recovery, and status aggregation for the entire platform)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {},
+  "license": "UNLICENSED",
+  "private": true
+}
