@@ -1,0 +1,19 @@
+{
+  "name": "ai-core-engine",
+  "version": "1.0.0",
+  "description": "TK AI FINANCE — Module 11: AI Core Engine (provider-agnostic AI layer: chat, market/portfolio/risk/trade/strategy analysis, bot builder, tool calling, memory, and cost/rate governance for the entire platform)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {},
+  "license": "UNLICENSED",
+  "private": true
+}
